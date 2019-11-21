@@ -45,22 +45,31 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
+    if (response.status !== 200) {
+      Message({
+        message: response.statusText || '请求错误，请重试',
+        type: 'error',
+        duration: 3 * 1000
+      })
+      return
+    }
     const res = response.data
 
     // if the custom code is not 20000, it is judged as an error.
-    if (res.code !== 20000) {
+    if (res.code === -500) {
       Message({
-        message: res.message || 'Error',
+        message: res.message || '请求错误',
         type: 'error',
-        duration: 5 * 1000
+        duration: 3 * 1000
       })
 
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+      // -1001-未登录  -1002-被禁止  -1003-服务器出了点问题
+      if (res.code === 1001 || res.code === 1002 || res.code === 1003) {
         // to re-login
-        MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-          confirmButtonText: 'Re-Login',
-          cancelButtonText: 'Cancel',
+        MessageBox.confirm('登录失效', '退出提示', {
+          confirmButtonText: '重新登录',
+          cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           store.dispatch('user/resetToken').then(() => {
