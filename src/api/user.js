@@ -4,7 +4,7 @@ export function login(data) {
   console.log('!!!!')
 
   return request({
-    url: 'http://39.107.105.168:8889/admin/manager/login',
+    url: '/api/admin/manager/login',
     method: 'post',
     data,
     transformRequest: [function(data) {
