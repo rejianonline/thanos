@@ -1,8 +1,15 @@
-module.exports = {
-    // target: 'http://localhost:3110'
-    // target: 'http://mock.wangle.link/mock/49'
-    // test 代理地址
-    // target: 'http://140.143.214.244'
-    // like-test/t01 代理地址
-    target: 'http://39.107.105.168:8889'
-}
+var api = require('./api')
+
+// 可以修改请求内容
+const onProxyReq = proxyReq => {}
+module.exports = api.reduce((result, curr) => {
+    result[curr.path] = {
+        target: curr.target,
+        onProxyReq,
+        changeOrigin: true,
+        pathRewrite: {
+            [`^${curr.path}`]: ''
+        }
+    }
+    return result
+}, {})

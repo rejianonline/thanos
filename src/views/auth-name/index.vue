@@ -22,24 +22,9 @@
       highlight-current-row
       style="width: 100%;"
     >
-      <el-table-column label="ID" prop="id" align="center" width="200">
-        <template slot-scope="{row}">
-          <span>{{ row.id }}</span>
-        </template>
-      </el-table-column>
       <el-table-column label="用户名" min-width="110px">
         <template slot-scope="{row}">
           <span>{{ row.name }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="房产所在地区" width="230px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.areaName }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="创建时间" width="150px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.createTime }}</span>
         </template>
       </el-table-column>
       <el-table-column label="审核" align="center" width="110" class-name="small-padding fixed-width">
@@ -52,7 +37,7 @@
 </template>
 
 <script>
-import { getHouseList } from '@/api/cert'
+import { getAuthNameList } from '@/api/cert'
 import waves from '@/directive/waves' // waves directive
 
 export default {
@@ -73,12 +58,12 @@ export default {
   },
   methods: {
     certItem(item) {
-      this.$router.push({ name: 'HouseDetails', query: { info: JSON.stringify(item) }})
+      this.$router.push({ name: 'AuthDetails', query: { info: JSON.stringify(item) }})
     },
     getList() {
       this.listLoading = true
-      getHouseList(this.listQuery).then(res => {
-        this.list = res.data.houseDetailList
+      getAuthNameList(this.listQuery).then(res => {
+        this.list = res.data.identifyList
         this.listLoading = false
       })
     },

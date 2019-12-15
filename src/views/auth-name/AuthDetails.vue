@@ -1,0 +1,198 @@
+<template>
+  <div class="mixin-components-container">
+    <el-row>
+      <el-card class="box-card">
+        <div slot="header" class="clearfix">
+          <span>身份认证</span>
+        </div>
+        <el-form :model="details" label-width="100px">
+          <el-form-item class="form-item" label="用户名">
+            <el-input v-model="details.name" disabled />
+          </el-form-item>
+          <el-form-item class="form-item" label="真实姓名">
+            <el-input v-model="details.name" disabled />
+          </el-form-item>
+          <el-form-item label="身份证">
+            <div class="cert-img">
+              <img :src="details.idCard + `?Expires=${tokenObject.expiration}&OSSAccessKeyId=${tokenObject.accessKeyId}&Signature=${tokenObject.accessKeySecret}`">
+            </div>
+          </el-form-item>
+        </el-form>
+
+        <el-form ref="personInfoForm" :model="personInfoForm" :rules="rules" label-width="100px">
+          <el-form-item class="form-item" label="身份证号码" prop="cardNum">
+            <el-input v-model="personInfoForm.cardNum" placeholder="输入身份证号码" />
+          </el-form-item>
+          <el-form-item class="form-item" label="身份证号码" prop="checkCardNum">
+            <el-input v-model="personInfoForm.checkCardNum" placeholder="再次输入身份证号码" />
+          </el-form-item>
+          <el-form-item class="form-item" label="真实姓名" prop="realName">
+            <el-input v-model="personInfoForm.realName" placeholder="输入真实姓名" />
+          </el-form-item>
+          <el-form-item class="form-item" label="真实姓名" prop="checkRealName">
+            <el-input v-model="personInfoForm.checkRealName" placeholder="再次输入真实姓名" />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submitForm('personInfoForm')">通过并提交身份信息</el-button>
+            <el-button @click="submitForm('personInfoForm')">拒绝</el-button>
+          </el-form-item>
+        </el-form>
+      </el-card>
+      <el-card class="box-card">
+        <div slot="header" class="clearfix">
+          <span>手持身份证认证</span>
+        </div>
+        <el-form ref="details" :model="details" label-width="80px">
+          <el-form-item label="证书">
+            <div class="cert-img">
+              <img :src="details.idBody + `?Expires=${tokenObject.expiration}&OSSAccessKeyId=${tokenObject.accessKeyId}&Signature=${tokenObject.accessKeySecret}`">
+            </div>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="verifyCardImg(1)">通过</el-button>
+            <el-button @click="verifyCardImg(-1)">拒绝</el-button>
+          </el-form-item>
+        </el-form>
+      </el-card>
+      <el-card class="box-card">
+        <div slot="header" class="clearfix">
+          <span>姿势照片认证</span>
+        </div>
+        <el-form ref="details" :model="details" label-width="80px">
+          <el-form-item label="证书">
+            <div class="cert-img">
+              <img :src="details.pose + `?Expires=${tokenObject.expiration}&OSSAccessKeyId=${tokenObject.accessKeyId}&Signature=${tokenObject.accessKeySecret}`">
+            </div>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="verifyPoseImg(1)">通过</el-button>
+            <el-button @click="verifyPoseImg(-1)">拒绝</el-button>
+          </el-form-item>
+        </el-form>
+      </el-card>
+    </el-row>
+  </div>
+</template>
+
+<script>
+import { certCardImg, getOssToken, certPoseImg } from '@/api/cert'
+
+export default {
+  name: 'HouseDetails',
+  data() {
+    var validate1 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入身份证号'))
+      } else if (value !== this.personInfoForm.cardNum) {
+        callback(new Error('两次输入身份证号不一致!'))
+      } else {
+        callback()
+      }
+    }
+    var validate2 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入真实姓名'))
+      } else if (value !== this.personInfoForm.realName) {
+        callback(new Error('两次输入真实姓名不一致!'))
+      } else {
+        callback()
+      }
+    }
+    return {
+      details: {},
+      tokenObject: {},
+      personInfoForm: {
+        cardNum: '',
+        checkCardNum: '',
+        realname: '',
+        checkRealName: ''
+      },
+      rules: {
+        cardNum: [
+          { required: true, message: '请输入身份证号', trigger: 'blur' }
+        ],
+        checkCardNum: [
+          { validator: validate1, trigger: 'blur' }
+        ],
+        realName: [
+          { required: true, message: '请输入真实姓名', trigger: 'blur' }
+        ],
+        checkRealName: [
+          { validator: validate2, trigger: 'blur' }
+        ]
+      }
+    }
+  },
+
+  created() {
+    this.getToken()
+  },
+
+  mounted() {
+    const info = JSON.parse(this.$route.query.info)
+    this.details = info
+  },
+
+  methods: {
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+
+    getToken() {
+      getOssToken().then(res => {
+        this.tokenObject = res.data.data
+        this.tokenObject.expiration = +new Date(this.tokenObject.expiration)
+      })
+    },
+
+    verifyCardImg(type) {
+      certCardImg({
+        accId: this.details.accId,
+        cardStatus: type,
+        bodyStatus: type
+      }).then(res => {
+        console.log(1111111, res)
+        if (res.data.code === 0) {
+          this.$message({ type: 'success', message: '认证成功' })
+        } else {
+          this.$message({ type: 'error', message: '拒绝认证' })
+        }
+      })
+    },
+
+    verifyPoseImg(type) {
+      certPoseImg({
+        accId: this.details.accId,
+        poseStatus: type
+      }).then(res => {
+        console.log(1111111, res)
+        if (res.data.code === 0) {
+          this.$message({ type: 'success', message: '认证成功' })
+        } else {
+          this.$message({ type: 'error', message: '拒绝认证' })
+        }
+      })
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.cert-img {
+  img {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+  }
+}
+.form-item {
+  max-width: 500px;
+}
+</style>
