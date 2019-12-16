@@ -17,7 +17,7 @@
           </el-form-item>
           <el-form-item v-for="(item, index) in details.pic" :key="index" label="证书">
             <div class="cert-img">
-              <img :src="item + `?Expires=${tokenObject.expiration}&OSSAccessKeyId=${tokenObject.accessKeyId}&Signature=${tokenObject.securityToken}`">
+              <img :src="item">
             </div>
           </el-form-item>
           <el-form-item>
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { certEdu, getOssToken } from '@/api/cert'
+import { certEdu } from '@/api/cert'
 
 export default {
   name: 'HouseDetails',
@@ -42,10 +42,6 @@ export default {
     }
   },
 
-  created() {
-    this.getToken()
-  },
-
   mounted() {
     const info = JSON.parse(this.$route.query.info)
     info.pic = info.pic.split(',')
@@ -53,13 +49,6 @@ export default {
   },
 
   methods: {
-    getToken() {
-      getOssToken().then(res => {
-        this.tokenObject = res.data.tokenObject
-        this.tokenObject.expiration = +new Date(this.tokenObject.expiration)
-      })
-    },
-
     onSubmit(type) {
       certEdu({
         eduDetailId: this.details.id,

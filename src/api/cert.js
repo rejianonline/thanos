@@ -18,14 +18,6 @@ export function certHouse(data = {}) {
   })
 }
 
-// 获取ossToken
-export function getOssToken() {
-  return request({
-    url: '/adminApi/admin/stsServer/getOssToken',
-    method: 'get'
-  })
-}
-
 // 实名认证列表
 export function getAuthNameList(param = {}) {
   return request({

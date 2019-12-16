@@ -61,7 +61,7 @@
         <el-form ref="details" :model="details" label-width="80px">
           <el-form-item label="证书">
             <div class="cert-img">
-              <img :src="details.pose + `?Expires=${tokenObject.expiration}&OSSAccessKeyId=${tokenObject.accessKeyId}&Signature=${tokenObject.accessKeySecret}`">
+              <img :src="details.pose">
             </div>
           </el-form-item>
           <el-form-item>
@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { certCardImg, getOssToken, certPoseImg } from '@/api/cert'
+import { certCardImg, certPoseImg } from '@/api/cert'
 
 export default {
   name: 'HouseDetails',
@@ -100,7 +100,6 @@ export default {
     }
     return {
       details: {},
-      tokenObject: {},
       personInfoForm: {
         cardNum: '',
         checkCardNum: '',
@@ -124,10 +123,6 @@ export default {
     }
   },
 
-  created() {
-    this.getToken()
-  },
-
   mounted() {
     const info = JSON.parse(this.$route.query.info)
     this.details = info
@@ -142,13 +137,6 @@ export default {
           console.log('error submit!!')
           return false
         }
-      })
-    },
-
-    getToken() {
-      getOssToken().then(res => {
-        this.tokenObject = res.data.data
-        this.tokenObject.expiration = +new Date(this.tokenObject.expiration)
       })
     },
 

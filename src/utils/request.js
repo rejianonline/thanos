@@ -2,12 +2,17 @@ import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
+import JSONbig from 'json-bigint'
 
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 10000 // request timeout
+  timeout: 10000, // request timeout
+  transformResponse: [function(data) {
+    // Do whatever you want to transform the data
+    return JSONbig.parse(data)
+  }]
 })
 
 // request interceptor
