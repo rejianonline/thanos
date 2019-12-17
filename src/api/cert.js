@@ -12,9 +12,8 @@ export function getHouseList(param) {
 // 房产认证
 export function certHouse(data = {}) {
   return request({
-    url: '/adminApi/admin/house/verifyHouse',
-    method: 'post',
-    data
+    url: `/adminApi/admin/house/verifyHouse?houseDetailId=${data.houseDetailId}&status=${data.status}`,
+    method: 'post'
   })
 }
 
@@ -30,18 +29,16 @@ export function getAuthNameList(param = {}) {
 // 认证身份证照片
 export function certCardImg(data = {}) {
   return request({
-    url: '/adminApi/admin/identify/verifyId',
-    method: 'post',
-    data
+    url: `/adminApi/admin/identify/verifyId?accId=${data.accId}&cardStatus=${data.cardStatus}&bodyStatus=${data.bodyStatus}`,
+    method: 'post'
   })
 }
 
 // 姿势照片认证
 export function certPoseImg(data = {}) {
   return request({
-    url: '/adminApi/admin/identify/verifyPose',
-    method: 'post',
-    data
+    url: `/adminApi/admin/identify/verifyPose?accId=${data.accId}&poseStatus=${data.poseStatus}`,
+    method: 'post'
   })
 }
 
@@ -56,8 +53,7 @@ export function getEduList() {
 // 认证学历
 export function certEdu(data = {}) {
   return request({
-    url: '/adminApi/admin/edu/verifyEdu',
-    method: 'post',
-    data
+    url: `/adminApi/admin/edu/verifyEdu?eduDetailId=${data.eduDetailId}&status=${data.status}`,
+    method: 'post'
   })
 }

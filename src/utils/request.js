@@ -9,7 +9,7 @@ const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 10000, // request timeout
-  transformResponse: [function(data) {
+  transformResponse: [(data) => {
     // Do whatever you want to transform the data
     return JSONbig.parse(data)
   }]
