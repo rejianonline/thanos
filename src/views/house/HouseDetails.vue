@@ -53,10 +53,10 @@ export default {
         houseDetailId: this.details.id,
         status: type
       }).then(res => {
-        if (res.data.code === 0) {
+        if (type === 1) {
           this.$message({ type: 'success', message: '认证成功' })
         } else {
-          this.$message({ type: 'error', message: '拒绝认证' })
+          this.$message({ type: 'error', message: '拒绝认证成功' })
         }
       })
     }
