@@ -240,6 +240,25 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/photo',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/photo/index'),
+        name: 'Edu',
+        meta: { title: '精选照片认证列表', icon: 'list', noCache: true }
+      },
+      {
+        path: 'details',
+        component: () => import('@/views/photo/PhotoDetails'),
+        name: 'EduDetails',
+        meta: { title: '精选照片认证详情', icon: 'edit', noCache: true },
+        hidden: true
+      }
+    ]
+  },
 
   /** when your routing map is too long, you can split it into small modules **/
   componentsRouter,
