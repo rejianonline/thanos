@@ -64,7 +64,9 @@ export default {
       list: null,
       listLoading: true,
       listQuery: {
-        phone: ''
+        phone: '',
+        pageNumber: 1,
+        pageSize: 10
       }
     }
   },

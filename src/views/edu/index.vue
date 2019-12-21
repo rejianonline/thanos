@@ -51,7 +51,7 @@ import { getEduList } from '@/api/cert'
 import waves from '@/directive/waves' // waves directive
 
 export default {
-  name: 'HouseList',
+  name: 'EduList',
   directives: { waves },
   data() {
     return {
@@ -59,7 +59,9 @@ export default {
       list: null,
       listLoading: true,
       listQuery: {
-        phone: ''
+        phone: '',
+        pageNumber: 1,
+        pageSize: 10
       }
     }
   },

@@ -14,7 +14,7 @@
           </el-form-item>
           <el-form-item label="身份证">
             <div class="cert-img">
-              <img :src="details.idCard + `?Expires=${tokenObject.expiration}&OSSAccessKeyId=${tokenObject.accessKeyId}&Signature=${tokenObject.accessKeySecret}`">
+              <img :src="details.idCard ">
             </div>
           </el-form-item>
         </el-form>
@@ -45,7 +45,7 @@
         <el-form ref="details" :model="details" label-width="80px">
           <el-form-item label="证书">
             <div class="cert-img">
-              <img :src="details.idBody + `?Expires=${tokenObject.expiration}&OSSAccessKeyId=${tokenObject.accessKeyId}&Signature=${tokenObject.accessKeySecret}`">
+              <img :src="details.idBody">
             </div>
           </el-form-item>
           <el-form-item>
@@ -78,7 +78,7 @@
 import { certCardImg, certPoseImg } from '@/api/cert'
 
 export default {
-  name: 'HouseDetails',
+  name: 'AuthDetails',
   data() {
     var validate1 = (rule, value, callback) => {
       if (value === '') {

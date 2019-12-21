@@ -27,17 +27,23 @@
           <span>{{ row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="审核" align="center" width="110" class-name="small-padding fixed-width">
+      <el-table-column label="头像" min-width="110px">
         <template slot-scope="{row}">
-          <el-button type="primary" size="mini" @click="certItem(row)">详情</el-button>
+          <div>
+            <img :src="row.avatar" alt="">
+          </div>
         </template>
+      </el-table-column>
+      <el-table-column label="审核" align="center" width="110" class-name="small-padding fixed-width">
+        <el-button type="primary" @click="submitForm(item, 1)">通过</el-button>
+        <el-button @click="submitForm(item, -1)">拒绝</el-button>
       </el-table-column>
     </el-table>
   </div>
 </template>
 
 <script>
-import { getPhotoList } from '@/api/cert'
+import { getAvatarList, certAvatar } from '@/api/cert'
 import waves from '@/directive/waves' // waves directive
 
 export default {
@@ -59,12 +65,18 @@ export default {
     this.getList()
   },
   methods: {
-    certItem(item) {
-      this.$router.push({ name: 'PhotoDetails', query: { info: JSON.stringify(item) }})
+    certItem(item, status) {
+      certAvatar({ accId: item.accId, status }).then(res => {
+        if (status === 1) {
+          this.$message({ type: 'success', message: '认证成功' })
+        } else {
+          this.$message({ type: 'error', message: '拒绝认证' })
+        }
+      })
     },
     getList() {
       this.listLoading = true
-      getPhotoList(this.listQuery).then(res => {
+      getAvatarList(this.listQuery).then(res => {
         this.list = res.data.accountList
         this.listLoading = false
       })

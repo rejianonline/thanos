@@ -27,6 +27,16 @@
           <span>{{ row.name }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="提现金额" min-width="110px">
+        <template slot-scope="{row}">
+          <span>{{ row.amount }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="提现时间" min-width="110px">
+        <template slot-scope="{row}">
+          <span>{{ row.createTime }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="审核" align="center" width="110" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
           <el-button type="primary" size="mini" @click="certItem(row)">详情</el-button>
@@ -37,11 +47,11 @@
 </template>
 
 <script>
-import { getPhotoList } from '@/api/cert'
+import { getWithdrawList } from '@/api/cert'
 import waves from '@/directive/waves' // waves directive
 
 export default {
-  name: 'PhotoList',
+  name: 'WidthDrawList',
   directives: { waves },
   data() {
     return {
@@ -60,12 +70,12 @@ export default {
   },
   methods: {
     certItem(item) {
-      this.$router.push({ name: 'PhotoDetails', query: { info: JSON.stringify(item) }})
+      this.$router.push({ name: 'WidthDrawDetails', query: { info: JSON.stringify(item) }})
     },
     getList() {
       this.listLoading = true
-      getPhotoList(this.listQuery).then(res => {
-        this.list = res.data.accountList
+      getWithdrawList(this.listQuery).then(res => {
+        this.list = res.data.withDrawList
         this.listLoading = false
       })
     },

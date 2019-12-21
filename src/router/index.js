@@ -247,15 +247,59 @@ export const asyncRoutes = [
       {
         path: 'index',
         component: () => import('@/views/photo/index'),
-        name: 'Edu',
+        name: 'Photo',
         meta: { title: '精选照片认证列表', icon: 'list', noCache: true }
       },
       {
         path: 'details',
         component: () => import('@/views/photo/PhotoDetails'),
-        name: 'EduDetails',
+        name: 'PhotoDetails',
         meta: { title: '精选照片认证详情', icon: 'edit', noCache: true },
         hidden: true
+      }
+    ]
+  },
+  {
+    path: '/width-draw',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/width-draw/index'),
+        name: 'WidthDraw',
+        meta: { title: '提现申请认证列表', icon: 'list', noCache: true }
+      },
+      {
+        path: 'details',
+        component: () => import('@/views/width-draw/WidthDrawDetails'),
+        name: 'WidthDrawDetails',
+        meta: { title: '提现申请认证详情', icon: 'edit', noCache: true },
+        hidden: true
+      }
+    ]
+  },
+  {
+    path: '/partner',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/partner/index'),
+        name: 'PartnerDetails',
+        meta: { title: '合伙人', icon: 'edit', noCache: true },
+        hidden: true
+      }
+    ]
+  },
+  {
+    path: '/head',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/head/index'),
+        name: 'HeadList',
+        meta: { title: '头像审核列表', icon: 'list', noCache: true }
       }
     ]
   },

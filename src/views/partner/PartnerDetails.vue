@@ -55,10 +55,10 @@ export default {
   },
 
   methods: {
-    submitForm(item, status) {
-      certPhoto({ selectPicId: item.id, status }).then(res => {
+    submitForm(item, type) {
+      certPhoto({ selectPicId: item.id, status: type }).then(res => {
         console.log('认证：', res)
-        if (status === 1) {
+        if (type === 1) {
           this.$message({ type: 'success', message: '认证成功' })
         } else {
           this.$message({ type: 'error', message: '拒绝认证' })

@@ -48,12 +48,12 @@ export default {
   },
 
   methods: {
-    onSubmit(type) {
+    onSubmit(status) {
       certHouse({
         houseDetailId: this.details.id,
-        status: type
+        status
       }).then(res => {
-        if (type === 1) {
+        if (status === 1) {
           this.$message({ type: 'success', message: '认证成功' })
         } else {
           this.$message({ type: 'error', message: '拒绝认证成功' })
