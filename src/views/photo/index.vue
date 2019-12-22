@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <div class="filter-container">
+    <!-- <div class="filter-container">
       <el-input
         v-model="listQuery.phone"
         placeholder="输入手机号码"
@@ -11,7 +11,7 @@
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         搜索
       </el-button>
-    </div>
+    </div> -->
 
     <el-table
       :key="tableKey"
@@ -59,7 +59,7 @@ export default {
       listLoading: true,
       total: 0,
       listQuery: {
-        phone: '',
+        // phone: '',
         pageNumber: 1,
         pageSize: 10
       }
