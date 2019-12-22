@@ -33,6 +33,15 @@
         </template>
       </el-table-column>
     </el-table>
+    <div class="page-box">
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :page-size="listQuery.pageSize"
+        :total="total"
+        @current-change="switchPage"
+      />
+    </div>
   </div>
 </template>
 
@@ -48,6 +57,7 @@ export default {
       tableKey: 0,
       list: null,
       listLoading: true,
+      total: 0,
       listQuery: {
         phone: '',
         pageNumber: 1,
@@ -59,6 +69,10 @@ export default {
     this.getList()
   },
   methods: {
+    switchPage(p) {
+      this.listQuery.pageNumber = p
+      this.getList()
+    },
     certItem(item) {
       this.$router.push({ name: 'AuthDetails', query: { info: JSON.stringify(item) }})
     },
@@ -66,6 +80,7 @@ export default {
       this.listLoading = true
       getAuthNameList(this.listQuery).then(res => {
         this.list = res.data.identifyList
+        this.total = res.data.total || 0
         this.listLoading = false
       })
     },
@@ -75,3 +90,10 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.page-box {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: 10px;
+}
+</style>
