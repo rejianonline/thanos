@@ -1,8 +1,6 @@
 import request from '@/utils/request'
 
 export function login(data) {
-  console.log('!!!!')
-
   return request({
     url: '/adminApi/admin/manager/login',
     method: 'post',

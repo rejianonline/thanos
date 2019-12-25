@@ -7,7 +7,8 @@ const state = {
   name: '',
   avatar: '',
   introduction: '',
-  roles: []
+  roles: [],
+  rolesArray: []
 }
 
 const mutations = {
@@ -25,6 +26,9 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_ROLES_ARRAY: (state, rolesArray) => {
+    state.rolesArray = rolesArray
   }
 }
 
@@ -36,6 +40,13 @@ const actions = {
       login({ mobile: username.trim(), password: password }).then(response => {
         const { data } = response
         commit('SET_TOKEN', data.token)
+
+        if (!data.roleArray || data.roleArray.length <= 0) {
+          reject('getInfo: rolesArray must be a non-null array!')
+        }
+
+        commit('SET_ROLES_ARRAY', data.roleArray)
+
         setToken(data.token)
         resolve()
       }).catch(error => {
@@ -49,13 +60,14 @@ const actions = {
     return new Promise((resolve, reject) => {
       const response = {
         data: {
-          roles: ['admin'],
+          roles: [],
           introduction: 'I am a super administrator',
           avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
           name: 'Super Admin'
         }
       }
       const { data } = response
+      data.roles = state.rolesArray
 
       if (!data) {
         reject('Verification failed, please Login again.')
@@ -68,7 +80,7 @@ const actions = {
         reject('getInfo: roles must be a non-null array!')
       }
 
-      commit('SET_ROLES', roles)
+      commit('SET_ROLES', data.roles)
       commit('SET_NAME', name)
       commit('SET_AVATAR', avatar)
       commit('SET_INTRODUCTION', introduction)

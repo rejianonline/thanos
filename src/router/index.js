@@ -7,9 +7,9 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-import componentsRouter from './modules/components'
-import chartsRouter from './modules/charts'
-import tableRouter from './modules/table'
+// import componentsRouter from './modules/components'
+// import chartsRouter from './modules/charts'
+// import tableRouter from './modules/table'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -104,74 +104,21 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
-    path: '/permission',
-    component: Layout,
-    redirect: '/permission/page',
-    alwaysShow: true, // will always show the root menu
-    name: 'Permission',
-    meta: {
-      title: 'Permission',
-      icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
-    },
-    children: [
-      {
-        path: 'page',
-        component: () => import('@/views/permission/page'),
-        name: 'PagePermission',
-        meta: {
-          title: 'Page Permission',
-          roles: ['admin'] // or you can only set roles in sub nav
-        }
-      },
-      {
-        path: 'directive',
-        component: () => import('@/views/permission/directive'),
-        name: 'DirectivePermission',
-        meta: {
-          title: 'Directive Permission'
-          // if do not set roles, means: this page does not require permission
-        }
-      },
-      {
-        path: 'role',
-        component: () => import('@/views/permission/role'),
-        name: 'RolePermission',
-        meta: {
-          title: 'Role Permission',
-          roles: ['admin']
-        }
-      }
-    ]
-  },
-
-  {
-    path: '/icon',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/icons/index'),
-        name: 'Icons',
-        meta: { title: 'Icons', icon: 'icon', noCache: true }
-      }
-    ]
-  },
-  {
     path: '/house',
     component: Layout,
+    meta: { roles: ['house'] },
     children: [
       {
         path: 'index',
         component: () => import('@/views/house/index'),
         name: 'House',
-        meta: { title: '房产认证列表', icon: 'list', noCache: true }
+        meta: { title: '房产认证列表', icon: 'list', noCache: true, roles: ['house'] }
       },
       {
         path: 'details',
         component: () => import('@/views/house/HouseDetails'),
         name: 'HouseDetails',
-        meta: { title: '房产认证详情', icon: 'edit', noCache: true },
+        meta: { title: '房产认证详情', icon: 'edit', noCache: true, roles: ['house'] },
         hidden: true
       }
     ]
@@ -179,18 +126,19 @@ export const asyncRoutes = [
   {
     path: '/auth-name',
     component: Layout,
+    meta: { roles: ['identify'] },
     children: [
       {
         path: 'index',
         component: () => import('@/views/auth-name/index'),
         name: 'AuthName',
-        meta: { title: '实名认证列表', icon: 'list', noCache: true }
+        meta: { title: '实名认证列表', icon: 'list', noCache: true, roles: ['identify'] }
       },
       {
         path: 'details',
         component: () => import('@/views/auth-name/AuthDetails'),
         name: 'AuthDetails',
-        meta: { title: '实名认证详情', icon: 'edit', noCache: true },
+        meta: { title: '实名认证详情', icon: 'edit', noCache: true, roles: ['identify'] },
         hidden: true
       }
     ]
@@ -198,18 +146,19 @@ export const asyncRoutes = [
   {
     path: '/edu',
     component: Layout,
+    meta: { roles: ['edu'] },
     children: [
       {
         path: 'index',
         component: () => import('@/views/edu/index'),
         name: 'Edu',
-        meta: { title: '学历认证列表', icon: 'list', noCache: true }
+        meta: { title: '学历认证列表', icon: 'list', noCache: true, roles: ['edu'] }
       },
       {
         path: 'details',
         component: () => import('@/views/edu/EduDetails'),
         name: 'EduDetails',
-        meta: { title: '学历认证详情', icon: 'edit', noCache: true },
+        meta: { title: '学历认证详情', icon: 'edit', noCache: true, roles: ['edu'] },
         hidden: true
       }
     ]
@@ -217,18 +166,19 @@ export const asyncRoutes = [
   {
     path: '/photo',
     component: Layout,
+    meta: { roles: ['selectPic'] },
     children: [
       {
         path: 'index',
         component: () => import('@/views/photo/index'),
         name: 'Photo',
-        meta: { title: '精选照片认证列表', icon: 'list', noCache: true }
+        meta: { title: '精选照片认证列表', icon: 'list', noCache: true, roles: ['selectPic'] }
       },
       {
         path: 'details',
         component: () => import('@/views/photo/PhotoDetails'),
         name: 'PhotoDetails',
-        meta: { title: '精选照片认证详情', icon: 'edit', noCache: true },
+        meta: { title: '精选照片认证详情', icon: 'edit', noCache: true, roles: ['selectPic'] },
         hidden: true
       }
     ]
@@ -236,18 +186,19 @@ export const asyncRoutes = [
   {
     path: '/width-draw',
     component: Layout,
+    meta: { roles: ['withDraw'] },
     children: [
       {
         path: 'index',
         component: () => import('@/views/width-draw/index'),
         name: 'WidthDraw',
-        meta: { title: '提现申请认证列表', icon: 'list', noCache: true }
+        meta: { title: '提现申请认证列表', icon: 'list', noCache: true, roles: ['withDraw'] }
       },
       {
         path: 'details',
         component: () => import('@/views/width-draw/WidthDrawDetails'),
         name: 'WidthDrawDetails',
-        meta: { title: '提现申请认证详情', icon: 'edit', noCache: true },
+        meta: { title: '提现申请认证详情', icon: 'edit', noCache: true, roles: ['withDraw'] },
         hidden: true
       }
     ]
@@ -255,32 +206,34 @@ export const asyncRoutes = [
   {
     path: '/partner',
     component: Layout,
+    meta: { roles: ['withDraw'] },
     children: [
       {
         path: 'index',
         component: () => import('@/views/partner/index'),
         name: 'Partner',
-        meta: { title: '合伙人', icon: 'edit', noCache: true }
+        meta: { title: '合伙人', icon: 'edit', noCache: true, roles: ['withDraw'] }
       }
     ]
   },
   {
-    path: '/head',
+    path: '/avatar',
     component: Layout,
+    meta: { roles: ['avatar'] },
     children: [
       {
         path: 'index',
-        component: () => import('@/views/head/index'),
-        name: 'HeadList',
-        meta: { title: '头像审核列表', icon: 'list', noCache: true }
+        component: () => import('@/views/avatar/index'),
+        name: 'AvatarList',
+        meta: { title: '头像审核列表', icon: 'list', noCache: true, roles: ['avatar'] }
       }
     ]
   },
 
   /** when your routing map is too long, you can split it into small modules **/
-  componentsRouter,
-  chartsRouter,
-  tableRouter,
+  // componentsRouter,
+  // chartsRouter,
+  // tableRouter,
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

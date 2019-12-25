@@ -13,6 +13,14 @@ function hasPermission(roles, route) {
   }
 }
 
+function hasPermission2(roles, route) {
+  if (route.meta && route.meta.roles) {
+    return roles.some(role => route.meta.roles.includes(role))
+  } else {
+    return true
+  }
+}
+
 /**
  * Filter asynchronous routing tables by recursion
  * @param routes asyncRoutes
@@ -26,6 +34,22 @@ export function filterAsyncRoutes(routes, roles) {
     if (hasPermission(roles, tmp)) {
       if (tmp.children) {
         tmp.children = filterAsyncRoutes(tmp.children, roles)
+      }
+      res.push(tmp)
+    }
+  })
+
+  return res
+}
+
+function filterAsyncRoutes2(routes, roles) {
+  const res = []
+
+  routes.forEach(route => {
+    const tmp = { ...route }
+    if (hasPermission2(roles, tmp)) {
+      if (tmp.children) {
+        tmp.children = filterAsyncRoutes2(tmp.children, roles)
       }
       res.push(tmp)
     }
@@ -48,12 +72,16 @@ const mutations = {
 
 const actions = {
   generateRoutes({ commit }, roles) {
+    const newRoles = roles.map(item => {
+      return item.trim().substring(7, item.length - 1)
+    })
+
     return new Promise(resolve => {
       let accessedRoutes
       if (roles.includes('admin')) {
         accessedRoutes = asyncRoutes || []
       } else {
-        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+        accessedRoutes = filterAsyncRoutes2(asyncRoutes, newRoles)
       }
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)
