@@ -1,4 +1,4 @@
-import { login } from '@/api/user'
+import { login, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -26,9 +26,6 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
-  },
-  SET_ROLES_ARRAY: (state, rolesArray) => {
-    state.rolesArray = rolesArray
   }
 }
 
@@ -41,12 +38,6 @@ const actions = {
         const { data } = response
         commit('SET_TOKEN', data.token)
 
-        if (!data.roleArray || data.roleArray.length <= 0) {
-          reject('getInfo: rolesArray must be a non-null array!')
-        }
-
-        commit('SET_ROLES_ARRAY', data.roleArray)
-
         setToken(data.token)
         resolve()
       }).catch(error => {
@@ -58,56 +49,33 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      const response = {
-        data: {
-          roles: [],
-          introduction: 'I am a super administrator',
-          avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-          name: 'Super Admin'
+      getInfo().then(response => {
+        const { data } = response
+
+        if (!data) {
+          reject('Verification failed, please Login again.')
         }
-      }
-      const { data } = response
-      data.roles = state.rolesArray
 
-      if (!data) {
-        reject('Verification failed, please Login again.')
-      }
+        const { manager: { mobile, role }} = data
+        if (!role) {
+          reject('getInfo: roles is required!')
+        }
+        const userInfo = {
+          roles: role.split(';'),
+          name: mobile,
+          avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+          introduction: 'I am a super administrator'
+        }
 
-      const { roles, name, avatar, introduction } = data
+        commit('SET_ROLES', userInfo.roles)
+        commit('SET_NAME', userInfo.name)
+        commit('SET_AVATAR', userInfo.avatar)
+        commit('SET_INTRODUCTION', userInfo.introduction)
 
-      // roles must be a non-empty array
-      if (!roles || roles.length <= 0) {
-        reject('getInfo: roles must be a non-null array!')
-      }
-
-      commit('SET_ROLES', data.roles)
-      commit('SET_NAME', name)
-      commit('SET_AVATAR', avatar)
-      commit('SET_INTRODUCTION', introduction)
-
-      resolve(data)
-      // getInfo(state.token).then(response => {
-      //   const { data } = response
-
-      //   if (!data) {
-      //     reject('Verification failed, please Login again.')
-      //   }
-
-      //   const { roles, name, avatar, introduction } = data
-
-      //   // roles must be a non-empty array
-      //   if (!roles || roles.length <= 0) {
-      //     reject('getInfo: roles must be a non-null array!')
-      //   }
-
-      //   commit('SET_ROLES', roles)
-      //   commit('SET_NAME', name)
-      //   commit('SET_AVATAR', avatar)
-      //   commit('SET_INTRODUCTION', introduction)
-      //   resolve(data)
-      // }).catch(error => {
-      //   reject(error)
-      // })
+        resolve(userInfo)
+      }).catch(error => {
+        reject(error)
+      })
     })
   },
 
