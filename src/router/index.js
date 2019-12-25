@@ -259,9 +259,8 @@ export const asyncRoutes = [
       {
         path: 'index',
         component: () => import('@/views/partner/index'),
-        name: 'PartnerDetails',
-        meta: { title: '合伙人', icon: 'edit', noCache: true },
-        hidden: true
+        name: 'Partner',
+        meta: { title: '合伙人', icon: 'edit', noCache: true }
       }
     ]
   },

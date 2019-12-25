@@ -43,7 +43,7 @@
           <span>手持身份证认证</span>
         </div>
         <el-form ref="details" :model="details" label-width="80px">
-          <el-form-item label="证书">
+          <el-form-item label="">
             <div class="cert-img">
               <img :src="details.idBody">
             </div>
@@ -59,7 +59,7 @@
           <span>姿势照片认证</span>
         </div>
         <el-form ref="details" :model="details" label-width="80px">
-          <el-form-item label="证书">
+          <el-form-item label="">
             <div class="cert-img">
               <img :src="details.pose">
             </div>
@@ -146,8 +146,7 @@ export default {
         cardStatus: type,
         bodyStatus: type
       }).then(res => {
-        console.log(1111111, res)
-        if (res.data.code === 0) {
+        if (type === 1) {
           this.$message({ type: 'success', message: '认证成功' })
         } else {
           this.$message({ type: 'error', message: '拒绝认证' })

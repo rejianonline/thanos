@@ -27,16 +27,21 @@
           <span>{{ row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="头像" min-width="110px">
+      <el-table-column label="头像" min-width="100px">
         <template slot-scope="{row}">
-          <div>
-            <img :src="row.avatar" alt="">
-          </div>
+          <el-image
+            class="head-img"
+            style="width: 100px; height: 100px"
+            :src="row.avatar"
+            :preview-src-list="[row.avatar]"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="审核" align="center" width="110" class-name="small-padding fixed-width">
-        <el-button type="primary" @click="submitForm(item, 1)">通过</el-button>
-        <el-button @click="submitForm(item, -1)">拒绝</el-button>
+      <el-table-column label="审核" align="center" width="200" class-name="small-padding fixed-width">
+        <template slot-scope="{row}">
+          <el-button type="primary" @click="certItem(row, 1)">通过</el-button>
+          <el-button @click="certItem(row, -1)">拒绝</el-button>
+        </template>
       </el-table-column>
     </el-table>
     <div class="page-box">
@@ -80,7 +85,7 @@ export default {
       this.getList()
     },
     certItem(item, status) {
-      certAvatar({ accId: item.accId, status }).then(res => {
+      certAvatar({ accId: item.id, status }).then(res => {
         if (status === 1) {
           this.$message({ type: 'success', message: '认证成功' })
         } else {
@@ -107,5 +112,8 @@ export default {
   display: flex;
   flex-direction: row-reverse;
   margin-top: 10px;
+}
+.head-img {
+  width: 100px;
 }
 </style>

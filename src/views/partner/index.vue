@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <div class="filter-container">
+    <!-- <div class="filter-container">
       <el-input
         v-model="listQuery.phone"
         placeholder="输入手机号码"
@@ -11,67 +11,52 @@
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         搜索
       </el-button>
-    </div>
-
-    <el-table
-      :key="tableKey"
-      v-loading="listLoading"
-      :data="list"
-      border
-      fit
-      highlight-current-row
-      style="width: 100%;"
-    >
-      <el-table-column label="用户名" min-width="110px">
-        <template slot-scope="{row}">
-          <span>{{ row.name }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="审核" align="center" width="110" class-name="small-padding fixed-width">
-        <template slot-scope="{row}">
-          <el-button type="primary" size="mini" @click="certItem(row)">详情</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+    </div> -->
+    <el-tabs v-model="listQuery.searchType">
+      <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
+        <el-radio-group v-model="listQuery.periodType" style="margin-bottom: 30px;">
+          <el-radio-button label="byDay">天</el-radio-button>
+          <el-radio-button label="byMonth">月</el-radio-button>
+        </el-radio-group>
+        <div style="overflow-x:scroll;">
+          <line-charts
+            :query="listQuery"
+            :width="'600px'"
+            :height="'400px'"
+          />
+        </div>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
 <script>
-import { getPhotoList } from '@/api/cert'
 import waves from '@/directive/waves' // waves directive
+import LineCharts from './LineCharts'
 
 export default {
-  name: 'PhotoList',
+  name: 'Partner',
   directives: { waves },
+  components: { LineCharts },
   data() {
     return {
       tableKey: 0,
       list: null,
-      listLoading: true,
+      tabs: [
+        { label: '按邀请人数', name: 'inviteCount' },
+        { label: '按奖励金额', name: 'inviteProfit' }
+      ],
       listQuery: {
-        phone: '',
-        pageNumber: 1,
-        pageSize: 10
+        // phone: '',
+        searchType: 'inviteCount',
+        periodType: 'byDay'
       }
     }
   },
-  created() {
-    this.getList()
-  },
   methods: {
-    certItem(item) {
-      this.$router.push({ name: 'PhotoDetails', query: { info: JSON.stringify(item) }})
-    },
-    getList() {
-      this.listLoading = true
-      getPhotoList(this.listQuery).then(res => {
-        this.list = res.data.accountList
-        this.listLoading = false
-      })
-    },
-    handleFilter() {
-      this.getList()
-    }
+    // handleFilter() {
+    //   this.getInfo()
+    // }
   }
 }
 </script>

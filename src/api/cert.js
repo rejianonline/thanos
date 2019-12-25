@@ -126,3 +126,12 @@ export function certAvatar(data = {}) {
     method: 'post'
   })
 }
+
+// 获取合伙人邀请信息
+export function getPartnerInfo(params = {}) {
+  return request({
+    url: `/admin/partner/stat`,
+    method: 'get',
+    params
+  })
+}

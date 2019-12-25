@@ -25,8 +25,8 @@
             <el-input v-model="details.totalWithDrawAmount" disabled />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit(1)">通过</el-button>
-            <el-button @click="onSubmit(-1)">拒绝</el-button>
+            <el-button type="primary" @click="submitForm(1)">通过</el-button>
+            <el-button @click="submitForm(-1)">拒绝</el-button>
           </el-form-item>
         </el-form>
       </el-card>
@@ -48,7 +48,7 @@ export default {
   mounted() {
     const info = JSON.parse(this.$route.query.info)
     this.details = info
-    this.details()
+    this.getDetails()
   },
 
   methods: {
@@ -63,11 +63,11 @@ export default {
     },
 
     getDetails() {
-      withdrawDetails({ id: this.details.accid }).then(res => {
+      withdrawDetails({ accId: this.details.accId }).then(res => {
         const { totalWithDrawAmount, amount, inviteCount } = res.data
         this.details.totalWithDrawAmount = totalWithDrawAmount
-        this.amountNumber = amount
-        this.inviteCount = inviteCount
+        this.$set(this.details, 'amountNumber', amount)
+        this.$set(this.details, 'inviteCount', inviteCount)
       })
     }
   }

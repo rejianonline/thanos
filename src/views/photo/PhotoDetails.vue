@@ -10,10 +10,14 @@
             <el-input v-model="details.name" disabled />
           </el-form-item>
           <el-form-item class="form-item" label="实名认证">
-            <span>未认证</span>
+            <span :class="{red: !identify || identify.cardStatus === -1}">
+              {{ identify && identify.cardStatus !== -1 ? '已认证' : '未认证' }}
+            </span>
           </el-form-item>
           <el-form-item label="姿势照片">
-            <span>审核中</span>
+            <span :class="{red: !identify || identify.poseStatus === -1}">
+              {{ identify && identify.poseStatus !== -1 ? '已审核' : '审核中' }}
+            </span>
             <div class="cert-img">
               <img :src="details.idCard">
             </div>
@@ -44,7 +48,8 @@ export default {
   data() {
     return {
       details: {},
-      selectPicList: []
+      selectPicList: [],
+      identify: null
     }
   },
 
@@ -67,8 +72,9 @@ export default {
     },
 
     getDetails() {
-      certPhotoDetails({ id: this.details.id }).then(res => {
+      certPhotoDetails({ accId: this.details.id }).then(res => {
         this.selectPicList = res.data.selectPicList
+        this.identify = res.data.identify
       })
     }
   }
@@ -96,5 +102,8 @@ export default {
     display: block;
     width: 100%;
   }
+}
+.red {
+  color: rgb(255, 58, 58);
 }
 </style>
