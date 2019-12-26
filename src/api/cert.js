@@ -26,6 +26,14 @@ export function getAuthNameList(params = {}) {
   })
 }
 
+// 提交身份信息
+export function inputAccountInfo(data = {}) {
+  return request({
+    url: `/adminApi/admin/identify/inputAccountInfo?accId=${data.accId}&idNo=${data.idNo}&realName=${data.realName}`,
+    method: 'post'
+  })
+}
+
 // 认证身份证照片
 export function certCardImg(data = {}) {
   return request({
@@ -106,7 +114,8 @@ export function withdrawDetails(params = {}) {
 // 审核一条提现记录
 export function certWithDraw(data = {}) {
   return request({
-    url: `/adminApi/admin/withDraw/verifyOneWithDraw?withDrawId=${data.withDrawId}&status=${data.status}`
+    url: `/adminApi/admin/withDraw/verifyOneWithDraw?withDrawId=${data.withDrawId}&status=${data.status}`,
+    method: 'post'
   })
 }
 
@@ -130,7 +139,7 @@ export function certAvatar(data = {}) {
 // 获取合伙人邀请信息
 export function getPartnerInfo(params = {}) {
   return request({
-    url: `/admin/partner/stat`,
+    url: `/adminApi/admin/partner/stat`,
     method: 'get',
     params
   })

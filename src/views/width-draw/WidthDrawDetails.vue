@@ -25,7 +25,7 @@
             <el-input v-model="details.totalWithDrawAmount" disabled />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitForm(1)">通过</el-button>
+            <el-button type="primary" @click="submitForm(2)">通过</el-button>
             <el-button @click="submitForm(-1)">拒绝</el-button>
           </el-form-item>
         </el-form>

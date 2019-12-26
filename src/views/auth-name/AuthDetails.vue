@@ -50,7 +50,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="verifyCardImg(1)">通过</el-button>
-            <el-button @click="verifyCardImg(-1)">拒绝</el-button>
+            <!-- <el-button @click="verifyCardImg(-1)">拒绝</el-button> -->
           </el-form-item>
         </el-form>
       </el-card>
@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { certCardImg, certPoseImg } from '@/api/cert'
+import { certCardImg, certPoseImg, inputAccountInfo } from '@/api/cert'
 
 export default {
   name: 'AuthDetails',
@@ -103,7 +103,7 @@ export default {
       personInfoForm: {
         cardNum: '',
         checkCardNum: '',
-        realname: '',
+        realName: '',
         checkRealName: ''
       },
       rules: {
@@ -132,7 +132,15 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          inputAccountInfo({
+            accId: this.details.accId,
+            idNo: this.personInfoForm.cardNum,
+            realName: this.personInfoForm.realName
+          }).then(res => {
+            if (res.code === 0) {
+              this.$message({ type: 'success', message: '认证成功' })
+            }
+          })
         } else {
           console.log('error submit!!')
           return false
