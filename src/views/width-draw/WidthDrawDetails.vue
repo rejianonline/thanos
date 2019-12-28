@@ -3,7 +3,7 @@
     <el-row>
       <el-card class="box-card">
         <div slot="header" class="clearfix">
-          <span>身份认证</span>
+          <span>提现审核</span>
         </div>
         <el-form :model="details" label-width="100px">
           <el-form-item class="form-item" label="用户名">

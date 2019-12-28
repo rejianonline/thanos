@@ -8,7 +8,7 @@ const state = {
   avatar: '',
   introduction: '',
   roles: [],
-  rolesArray: []
+  isPartner: ''
 }
 
 const mutations = {
@@ -26,6 +26,9 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_PARTNER: (state, isPartner) => {
+    state.isPartner = isPartner
   }
 }
 
@@ -56,7 +59,7 @@ const actions = {
           reject('Verification failed, please Login again.')
         }
 
-        const { manager: { mobile, role }} = data
+        const { manager: { mobile, role, bePartner }} = data
         if (!role) {
           reject('getInfo: roles is required!')
         }
@@ -67,6 +70,7 @@ const actions = {
           introduction: 'I am a super administrator'
         }
 
+        commit('SET_PARTNER', bePartner)
         commit('SET_ROLES', userInfo.roles)
         commit('SET_NAME', userInfo.name)
         commit('SET_AVATAR', userInfo.avatar)

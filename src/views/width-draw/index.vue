@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <!-- <div class="filter-container">
+    <div v-if="isPartner === 0" class="filter-container">
       <el-input
         v-model="listQuery.phone"
         placeholder="输入手机号码"
@@ -11,7 +11,7 @@
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         搜索
       </el-button>
-    </div> -->
+    </div>
 
     <el-table
       :key="tableKey"
@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { getWithdrawList } from '@/api/cert'
 import waves from '@/directive/waves' // waves directive
 
@@ -69,11 +70,16 @@ export default {
       listLoading: true,
       total: 0,
       listQuery: {
-        // phone: '',
+        phone: '',
         pageNumber: 1,
         pageSize: 10
       }
     }
+  },
+  computed: {
+    ...mapGetters([
+      'isPartner'
+    ])
   },
   created() {
     this.getList()

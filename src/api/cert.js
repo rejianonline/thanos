@@ -139,7 +139,7 @@ export function certAvatar(data = {}) {
 // 获取合伙人邀请信息
 export function getPartnerInfo(params = {}) {
   return request({
-    url: `/adminApi/admin/partner/stat`,
+    url: `/adminApi/admin/partner/statByMobile`,
     method: 'get',
     params
   })
