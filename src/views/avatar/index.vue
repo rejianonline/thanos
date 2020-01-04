@@ -39,7 +39,7 @@
       </el-table-column>
       <el-table-column label="审核" align="center" width="200" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
-          <el-button type="primary" @click="certItem(row, 1)">通过</el-button>
+          <el-button type="primary" @click="certItem(row, 2)">通过</el-button>
           <el-button @click="certItem(row, -1)">拒绝</el-button>
         </template>
       </el-table-column>
