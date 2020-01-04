@@ -86,7 +86,7 @@ export default {
     },
     certItem(item, status) {
       certAvatar({ accId: item.id, status }).then(res => {
-        if (status === 1) {
+        if (status === 2) {
           this.$message({ type: 'success', message: '认证成功' })
         } else {
           this.$message({ type: 'error', message: '拒绝认证' })
