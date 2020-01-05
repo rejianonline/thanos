@@ -29,7 +29,7 @@
             <div class="item-img">
               <img :src="item.url" alt="">
             </div>
-            <div>
+            <div v-if="item.status !== 1">
               <el-button type="primary" @click="submitForm(item, 1)">通过</el-button>
               <el-button @click="submitForm(item, -1)">拒绝</el-button>
             </div>
