@@ -50,7 +50,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="verifyCardImg(1)">通过</el-button>
-            <!-- <el-button @click="verifyCardImg(-1)">拒绝</el-button> -->
+            <el-button @click="verifyCardImg(-1)">拒绝</el-button>
           </el-form-item>
         </el-form>
       </el-card>
