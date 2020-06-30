@@ -38,7 +38,7 @@
           </el-form-item>
         </el-form>
       </el-card>
-      <el-card class="box-card">
+      <!-- <el-card class="box-card">
         <div slot="header" class="clearfix">
           <span>手持身份证认证</span>
         </div>
@@ -53,7 +53,7 @@
             <el-button @click="verifyCardImg(-1)">拒绝</el-button>
           </el-form-item>
         </el-form>
-      </el-card>
+      </el-card> -->
       <el-card class="box-card">
         <div slot="header" class="clearfix">
           <span>姿势照片认证</span>
