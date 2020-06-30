@@ -37,7 +37,7 @@ export function inputAccountInfo(data = {}) {
 // 认证身份证照片
 export function certCardImg(data = {}) {
   return request({
-    url: `/adminApi/admin/identify/verifyId?accId=${data.accId}&cardStatus=${data.cardStatus}&bodyStatus=${data.bodyStatus}`,
+    url: `/adminApi/admin/identify/verifyId?accId=${data.accId}&idStatus=${data.idStatus}&bodyStatus=${data.bodyStatus}`,
     method: 'post'
   })
 }

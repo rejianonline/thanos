@@ -10,8 +10,8 @@
             <el-input v-model="details.name" disabled />
           </el-form-item>
           <el-form-item class="form-item" label="实名认证">
-            <span :class="{red: !identify || identify.cardStatus === -1}">
-              {{ identify && identify.cardStatus !== -1 ? '已认证' : '未认证' }}
+            <span :class="{red: !identify || identify.idStatus === -1}">
+              {{ identify && identify.idStatus !== -1 ? '已认证' : '未认证' }}
             </span>
           </el-form-item>
           <el-form-item label="姿势照片">
@@ -23,7 +23,7 @@
             </div>
           </el-form-item>
         </el-form>
-        <div v-if="selectPicList.length">
+        <div v-if="selectPicList && selectPicList.length">
           <div v-for="(item, index) in selectPicList" :key="index">
             <p class="item-title">{{ item.status === 1 ? '已经通过审核的精选照片' : '待审核的精选照片' }}</p>
             <div class="item-img">
