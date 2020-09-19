@@ -135,7 +135,7 @@ export default {
     verifyCardImg(type) {
       certCardImg({
         accId: this.details.accId,
-        idStatus: type
+        cardStatus: type
       }).then(res => {
         if (type === 1) {
           this.$message({ type: 'success', message: '认证成功' })
