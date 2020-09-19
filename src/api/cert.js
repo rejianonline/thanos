@@ -158,7 +158,7 @@ export function certPoseImg(data = {}) {
 // 实名认证接口
 export function certCardImg(data = {}) {
   return request({
-    url: `/adminApi/admin/identify/verifyId?accId=${data.accId}&cardStatus=${data.cardStatus}`,
+    url: `/adminApi/admin/identify/verifyId?accId=${data.accId}&idStatus=${data.idStatus}`,
     method: 'post'
   })
 }
