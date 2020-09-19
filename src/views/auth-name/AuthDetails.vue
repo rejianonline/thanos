@@ -38,7 +38,7 @@
           </el-form-item>
         </el-form>
       </el-card>
-      <!-- <el-card class="box-card">
+      <el-card class="box-card">
         <div slot="header" class="clearfix">
           <span>手持身份证认证</span>
         </div>
@@ -53,29 +53,13 @@
             <el-button @click="verifyCardImg(-1)">拒绝</el-button>
           </el-form-item>
         </el-form>
-      </el-card> -->
-      <el-card class="box-card">
-        <div slot="header" class="clearfix">
-          <span>姿势照片认证</span>
-        </div>
-        <el-form ref="details" :model="details" label-width="80px">
-          <el-form-item label="">
-            <div class="cert-img">
-              <img :src="details.pose">
-            </div>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="verifyPoseImg(1)">通过</el-button>
-            <el-button @click="verifyPoseImg(-1)">拒绝</el-button>
-          </el-form-item>
-        </el-form>
       </el-card>
     </el-row>
   </div>
 </template>
 
 <script>
-import { certCardImg, certPoseImg, inputAccountInfo } from '@/api/cert'
+import { certCardImg, inputAccountInfo } from '@/api/cert'
 
 export default {
   name: 'AuthDetails',
@@ -157,19 +141,6 @@ export default {
           this.$message({ type: 'success', message: '认证成功' })
         } else {
           this.$message({ type: 'error', message: '拒绝认证' })
-        }
-      })
-    },
-
-    verifyPoseImg(type) {
-      certPoseImg({
-        accId: this.details.accId,
-        poseStatus: type
-      }).then(res => {
-        if (type === 1) {
-          this.$message({ type: 'success', message: '认证成功' })
-        } else {
-          this.$message({ type: 'error', message: '拒绝认证成功' })
         }
       })
     }

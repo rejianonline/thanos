@@ -124,6 +124,26 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/auth-zr',
+    component: Layout,
+    meta: { roles: ['identify'] },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/auth-zr/index'),
+        name: 'AuthZr',
+        meta: { title: '真人认证列表', icon: 'list', noCache: true, roles: ['identify'] }
+      },
+      {
+        path: 'details',
+        component: () => import('@/views/auth-zr/AuthDetails'),
+        name: 'AuthDetails',
+        meta: { title: '真人认证详情', icon: 'edit', noCache: true, roles: ['identify'] },
+        hidden: true
+      }
+    ]
+  },
+  {
     path: '/auth-name',
     component: Layout,
     meta: { roles: ['identify'] },
@@ -137,7 +157,7 @@ export const asyncRoutes = [
       {
         path: 'details',
         component: () => import('@/views/auth-name/AuthDetails'),
-        name: 'AuthDetails',
+        name: 'AuthDetailsName',
         meta: { title: '实名认证详情', icon: 'edit', noCache: true, roles: ['identify'] },
         hidden: true
       }
