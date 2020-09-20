@@ -37,6 +37,31 @@
           />
         </template>
       </el-table-column>
+      <el-table-column label="实名认证状态" min-width="100px">
+        <template slot-scope="{row}">
+          <span>{{ getStatus(row.identify && row.identify.idStatus) || '没有提交认证' }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="实名认证照片" min-width="100px">
+        <template slot-scope="{row}">
+          <el-image
+            class="head-img"
+            style="width: 100px; height: 100px"
+            :src="row.identify && row.identify.idBody"
+            :preview-src-list="[row.identify && row.identify.idBody]"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column label="真人认证照片" min-width="100px">
+        <template slot-scope="{row}">
+          <el-image
+            class="head-img"
+            style="width: 100px; height: 100px"
+            :src="row.identify && row.identify.pose"
+            :preview-src-list="[row.identify && row.identify.pose]"
+          />
+        </template>
+      </el-table-column>
       <el-table-column label="审核" align="center" width="200" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
           <el-button type="primary" @click="certItem(row, 2)">通过</el-button>
@@ -80,6 +105,15 @@ export default {
     this.getList()
   },
   methods: {
+    getStatus(s) {
+      const stext = {
+        '-1': '失败',
+        '0': '信息不全,没有开始认证',
+        '1': '成功',
+        '2': '认证中'
+      }
+      return s && stext[s]
+    },
     switchPage(p) {
       this.listQuery.pageNumber = p
       this.getList()
