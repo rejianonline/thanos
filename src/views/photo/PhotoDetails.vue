@@ -9,14 +9,19 @@
           <el-form-item class="form-item" label="用户名">
             <el-input v-model="details.name" disabled />
           </el-form-item>
+          <el-form-item class="form-item" label="实名认证状态">
+            <span :class="{red: !identify || identify.idStatus === -1}">
+              {{ status || '没有提交认证' }}
+            </span>
+          </el-form-item>
           <el-form-item label="实名认证照片">
-            <div v-if="identify.idBody" class="cert-img">
+            <div v-if="identify && identify.idBody" class="cert-img">
               <img :src="identify.idBody">
             </div>
             <span v-else>无</span>
           </el-form-item>
           <el-form-item label="真人认证照片">
-            <div v-if="identify.pose" class="cert-img">
+            <div v-if="identify && identify.pose" class="cert-img">
               <img :src="identify.pose">
             </div>
             <span v-else>无</span>
@@ -49,6 +54,18 @@ export default {
       details: {},
       selectPicList: [],
       identify: null
+    }
+  },
+
+  computed: {
+    status() {
+      const stext = {
+        '-1': '失败',
+        '0': '信息不全,没有开始认证',
+        '1': '成功',
+        '2': '认证中'
+      }
+      return this.identify && stext[this.identify.idStatus]
     }
   },
 
