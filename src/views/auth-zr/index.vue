@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { getSmList } from '@/api/cert'
+import { getZrList } from '@/api/cert'
 import waves from '@/directive/waves' // waves directive
 
 export default {
@@ -74,11 +74,11 @@ export default {
       this.getList()
     },
     certItem(item) {
-      this.$router.push({ name: 'AuthDetailsName', query: { info: JSON.stringify(item) }})
+      this.$router.push({ name: 'AuthDetails', query: { info: JSON.stringify(item) }})
     },
     getList() {
       this.listLoading = true
-      getSmList(this.listQuery).then(res => {
+      getZrList(this.listQuery).then(res => {
         this.list = res.data.identifyList
         this.total = res.data.total || 0
         this.listLoading = false

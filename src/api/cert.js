@@ -34,22 +34,6 @@ export function inputAccountInfo(data = {}) {
   })
 }
 
-// 认证身份证照片
-export function certCardImg(data = {}) {
-  return request({
-    url: `/adminApi/admin/identify/verifyId?accId=${data.accId}&idStatus=${data.idStatus}&bodyStatus=${data.bodyStatus}`,
-    method: 'post'
-  })
-}
-
-// 姿势照片认证
-export function certPoseImg(data = {}) {
-  return request({
-    url: `/adminApi/admin/identify/verifyPose?accId=${data.accId}&poseStatus=${data.poseStatus}`,
-    method: 'post'
-  })
-}
-
 // 学历认证列表
 export function getEduList(params = {}) {
   return request({
@@ -142,5 +126,39 @@ export function getPartnerInfo(params = {}) {
     url: `/adminApi/admin/partner/statByMobile`,
     method: 'get',
     params
+  })
+}
+
+// 获取真人认正列表
+export function getZrList(params = {}) {
+  return request({
+    url: `/adminApi/admin/identify/listZrNeedVerify`,
+    method: 'get',
+    params
+  })
+}
+
+// 获取实名认正列表
+export function getSmList(params = {}) {
+  return request({
+    url: `/adminApi/admin/identify/listIdNeedVerify`,
+    method: 'get',
+    params
+  })
+}
+
+// 真人认证接口
+export function certPoseImg(data = {}) {
+  return request({
+    url: `/adminApi/admin/identify/verifyPose?accId=${data.accId}&poseStatus=${data.poseStatus}`,
+    method: 'post'
+  })
+}
+
+// 实名认证接口
+export function certCardImg(data = {}) {
+  return request({
+    url: `/adminApi/admin/identify/verifyId?accId=${data.accId}&idStatus=${data.idStatus}`,
+    method: 'post'
   })
 }
