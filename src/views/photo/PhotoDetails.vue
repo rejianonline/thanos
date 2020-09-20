@@ -9,18 +9,17 @@
           <el-form-item class="form-item" label="用户名">
             <el-input v-model="details.name" disabled />
           </el-form-item>
-          <el-form-item class="form-item" label="实名认证">
-            <span :class="{red: !identify || identify.idStatus === -1}">
-              {{ identify && identify.idStatus !== -1 ? '已认证' : '未认证' }}
-            </span>
-          </el-form-item>
-          <el-form-item label="姿势照片">
-            <span :class="{red: !identify || identify.poseStatus === -1}">
-              {{ identify && identify.poseStatus !== -1 ? '已审核' : '审核中' }}
-            </span>
-            <div class="cert-img">
-              <img :src="details.idCard">
+          <el-form-item label="实名认证照片">
+            <div v-if="identify.idBody" class="cert-img">
+              <img :src="identify.idBody">
             </div>
+            <span v-else>无</span>
+          </el-form-item>
+          <el-form-item label="真人认证照片">
+            <div v-if="identify.pose" class="cert-img">
+              <img :src="identify.pose">
+            </div>
+            <span v-else>无</span>
           </el-form-item>
         </el-form>
         <div v-if="selectPicList && selectPicList.length">
