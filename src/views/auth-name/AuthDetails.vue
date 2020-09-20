@@ -33,14 +33,15 @@
             <el-input v-model="personInfoForm.checkRealName" placeholder="再次输入真实姓名" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitForm('personInfoForm')">通过并提交身份信息</el-button>
-            <el-button @click="submitForm('personInfoForm')">拒绝</el-button>
+            <el-button type="primary" @click="submitForm('personInfoForm')">提交信息</el-button>
+            <el-button type="primary" @click="verifyCardImg(1)">通过</el-button>
+            <el-button @click="verifyCardImg(-1)">拒绝</el-button>
           </el-form-item>
         </el-form>
       </el-card>
       <el-card class="box-card">
         <div slot="header" class="clearfix">
-          <span>手持身份证认证</span>
+          <span>身份证国徽面</span>
         </div>
         <el-form ref="details" :model="details" label-width="80px">
           <el-form-item label="">
@@ -48,9 +49,17 @@
               <img :src="details.idBody">
             </div>
           </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="verifyCardImg(1)">通过</el-button>
-            <el-button @click="verifyCardImg(-1)">拒绝</el-button>
+        </el-form>
+      </el-card>
+      <el-card class="box-card">
+        <div slot="header" class="clearfix">
+          <span>真人认证招聘</span>
+        </div>
+        <el-form ref="details" :model="details" label-width="80px">
+          <el-form-item label="">
+            <div class="cert-img">
+              <img :src="details.pose">
+            </div>
           </el-form-item>
         </el-form>
       </el-card>
